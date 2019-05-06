@@ -27,7 +27,28 @@ public class Manipulator {
 
     }
 
-    public static ArrayList<String> productQueryer(String sqlStatement) throws SQLException {
+    public static int lastIdOfProduct(){
+        int i = 0;
+        try {
+            GetConnection.openConnection();
+            String sqlStatement = "select * from products order by id  desc limit 1";
+            PreparedStatement preparedStatement = GetConnection.connection.prepareStatement(sqlStatement);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                i = resultSet.getInt(1);
+            }
+          //  System.out.println(i);
+            return i;
+        }catch (SQLException sql){
+           // System.out.println("data Empty");
+            sql.printStackTrace();
+        }finally {
+            GetConnection.closeConnection();
+        }
+        return -1;
+    }
+
+    public static ArrayList<Product> productQueryer(String sqlStatement) throws SQLException {
 
         ArrayList arrayList = new ArrayList();
 

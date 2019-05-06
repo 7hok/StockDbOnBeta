@@ -18,7 +18,10 @@ import java.util.Iterator;
 public class GetConnection {
     public static final String separator = "®";
     public static Connection connection = null;
-
+    public static int lastIndexOfRecord;
+    static {
+        lastIndexOfRecord = Manipulator.lastIdOfProduct()+1;
+    }
     public static void  openConnection(){
         try {
 //            Class.forName("com.mysql.jdbc.Driver");

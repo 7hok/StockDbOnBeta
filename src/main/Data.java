@@ -54,7 +54,8 @@ public class Data {
                 statement.executeUpdate(sqlInsertData);
             }
             product = new ArrayList<>();
-            int lastIndex = Integer.parseInt(Complementary.subString(App.products.get(App.products.size()-1))[0])+1;
+            int lastIndex = GetConnection.lastIndexOfRecord;
+            GetConnection.lastIndexOfRecord++;
             product.add(lastIndex+GetConnection.separator+pro_name+GetConnection.separator+pro_price+GetConnection.separator+qty+GetConnection.separator+importDate);
         } catch (SQLException e) {
             System.out.println("exception here");
@@ -135,7 +136,7 @@ public class Data {
             }
 
             if (i>0){
-                System.out.println("found");
+//                System.out.println("found");
                 System.out.println(i);
                 return i;
             }else{

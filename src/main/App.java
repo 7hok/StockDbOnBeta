@@ -48,7 +48,7 @@ public class App<publlic> {
                 case "w":
                     Product product = Manipulator.insertNewRecord();
 
-                    System.out.println(product);
+                    //System.out.println(product);
                     ArrayList<String> temporaryList = Data.write(product.getName(), product.getUnitPrice(),product.getStockQty(),product.getImportedDate(),1);
                    if(temporaryList.size()>0){
                        products.add(temporaryList.get(0));
@@ -101,7 +101,7 @@ public class App<publlic> {
                     break;
                 case "sa":
                     saveNewOption("Do you want to save it? [Y/y] or [N/n] : ");
-                    System.out.println(products);
+                    //System.out.println(products);
                     break;
                 case "re":
                     reStore();
