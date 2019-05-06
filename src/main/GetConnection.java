@@ -21,22 +21,24 @@ public class GetConnection {
 
     public static void  openConnection(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            //Class.forName("org.postgresql.Driver");//<<<<update driver
+//            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");//<<<<update driver
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         //<<<< port
-        //String url = "jdbc:postgresql://localhost:5432/StockTestData";
-        String url = "jdbc:mysql://localhost:3306/javatesting";
+        String url = "jdbc:postgresql://localhost:5432/Stock Management";
+        String username = "postgres";
+        String password = "123123123";
+//        String url = "jdbc:mysql://localhost:3306/javatesting";
         try {
 
             ///<<<< update package connection "user name password "
             ///<<<< user and password
             //connection = DriverManager.getConnection(url,"postgres", "123");
 
-            connection = DriverManager.getConnection(url,"root", "root");
+            connection = DriverManager.getConnection(url,username, password);
         } catch (SQLException e) {
 
             e.printStackTrace();
