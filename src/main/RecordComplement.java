@@ -43,8 +43,21 @@ public class RecordComplement {
                     isUpdated = true;
                     break;
                 case 2:
-                    System.out.print("Name:");
-                    String name = new Scanner(System.in).nextLine();
+
+                    String name ="";
+
+                    while(true) {
+                        System.out.print("Name:");
+
+                        name = new Scanner(System.in).nextLine();
+
+                        if (RecordComplement.stringHasChar("\\'",name)) {
+                            Complementary.tabler("Name Can't Be Inputted with single quote(') ");
+                            continue;
+                        }
+                        break;
+                    }
+
                     product.setName(name);
                     isUpdated = true;
                     break;
@@ -95,8 +108,17 @@ public class RecordComplement {
     }
 
     public static Product insertNewRecord() {
-        System.out.print("Name:");
-        String name = new Scanner(System.in).nextLine();
+        String name ="";
+        while(true) {
+            System.out.print("Name:");
+
+             name = new Scanner(System.in).nextLine();
+            if (RecordComplement.stringHasChar("\\'",name)){
+                Complementary.tabler("Name Can't Be Inputted with single quote(')");
+                continue;
+            }
+            break;
+        }
         double price = Validator.readDouble("Price : ");
         int qty = Validator.readInt("Qty :");
 

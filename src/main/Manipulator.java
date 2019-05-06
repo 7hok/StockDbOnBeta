@@ -27,11 +27,11 @@ public class Manipulator {
 
     }
 
-    public static int lastIdOfProduct(){
+    public static int lastIdOf(String table){
         int i = 0;
         try {
             GetConnection.openConnection();
-            String sqlStatement = "select * from products order by id  desc limit 1";
+            String sqlStatement = "select * from " + table + " order by id  desc limit 1";
             PreparedStatement preparedStatement = GetConnection.connection.prepareStatement(sqlStatement);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
@@ -85,12 +85,14 @@ public class Manipulator {
 
     //***** generate sql statement
     public static String generateSQLstatementFromProduct(Product product){
-        return "update products set name = '"+product.getName()+"',unitPrice = "+product.getUnitPrice()+",stockQty="+product.getStockQty()+",importedDate='"+product.getImportedDate()+"' where id ="+product.getId() ;
+        return "update products set name "+'"'+product.getName()+"',unitPrice = "+product.getUnitPrice()+",stockQty="+product.getStockQty()+",importedDate='"+product.getImportedDate()+"' where id ="+product.getId() ;
+       // return "update products set name = " +'"'+product.getName()+'"'+",unitPrice = "+product.getUnitPrice()+",stockQty="+product.getStockQty()+",importedDate='"+product.getImportedDate()+"' where id ="+product.getId() ;
     }
 
+    //<<<<< working
     //***** String of Product overloading
     public static String generateSQLstatementFromProduct(String []product){
-        return "update products set name = '"+product[1]+"',unitPrice = "+product[2]+",stockQty="+product[3]+",importedDate='"+product[4]+"' where id ="+product[0] ;
+        return "update products set name = "+'"'+product[1]+'"'+",unitPrice = "+product[2]+",stockQty="+product[3]+",importedDate="+'"'+product[4]+'"'+" where id ="+product[0] ;
     }
 
     //***** String of Product overloading
@@ -116,7 +118,7 @@ public class Manipulator {
     public static String generateUpdateStatement(String updateQuery){
         System.out.println('"'+updateQuery+'"');
         try {
-           int i = updater(  "insert into tb_statements (statement) values ("+'"'+updateQuery+'"'+")");
+           int i = updater(  "insert into tb_statements (statement) values ('"+updateQuery+"')");
         }catch (SQLException sql ){
             sql.printStackTrace();
         }
@@ -129,13 +131,17 @@ public class Manipulator {
 //    }
 
     public static Product insertNewRecord() {
-        System.out.print("Name:");
+//        String name = Validator.readStringWithCondition("Name : ", "'");
+        System.out.print("Name : ");
         String name = new Scanner(System.in).nextLine();
+        if (RecordComplement.stringHasChar("\\'", name)) {
+            System.out.println("Mistake");
+//            insertNewRecord();
+            return insertNewRecord();
+        }
         double price = Validator.readDouble("Price : ");
         int qty = Validator.readInt("Qty :");
-        System.out.print("Date-Imported : ");
-        String dateTime = new Scanner(System.in).nextLine();
-        return new Product(Integer.parseInt(Complementary.subString(App.products.get(App.products.size()-1))[0])+1, name, price, qty, dateTime);
+        return new Product(0,name, price, qty, App.getDate());
     }
 
     public static ArrayList<String> statementQueryer(String sqlStatement) throws SQLException {
@@ -160,7 +166,8 @@ public class Manipulator {
         if (arrayList.size()>0){
             arrayList.forEach((statement)->{
                 try {
-                    Manipulator.updater(statement);
+                    String str = Manipulator.generateStatement(statement);
+                    Manipulator.updater(str);
                 }catch (SQLException sql){
                     System.out.println("problem with sql statement update");
                 }
@@ -171,6 +178,9 @@ public class Manipulator {
             return null;
         }
 
+    }
+    public static String generateStatement(String oldStatement){
+        return oldStatement.replace("\"", "'");
     }
 }
 

@@ -97,16 +97,18 @@ public class App<publlic> {
                     setRow();
                     break;
                 case "ba":
-                    backup();
+                    //backup();
+                    Bonus.backUpDatabase();
                     break;
                 case "sa":
                     saveNewOption("Do you want to save it? [Y/y] or [N/n] : ");
                     //System.out.println(products);
                     break;
                 case "re":
-                    reStore();
+                    Bonus.restoreDatabase();
                     break;
                 case "h":
+                    help();
                     break;
                 case "e":
                     System.exit(0);
@@ -416,6 +418,7 @@ public class App<publlic> {
         if (pageNum > getTotalPage()) return;
         if (pageNum == getTotalPage()) {
             goLast();
+            return;
         } else {
             String[] myProducts = new String[start + numOfRows];
             for (int i = start; i < start + numOfRows; i++) {
@@ -637,7 +640,7 @@ public class App<publlic> {
 
     }
 
-    private static String getDate() {
+    public static String getDate() {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
 //        System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
@@ -838,7 +841,7 @@ public class App<publlic> {
                 e.printStackTrace();
             }
 
-            System.out.println("\n\nAlready updated!!!\n");
+            Complementary.tabler("Already updated!!!");
 
     }
     private static void saveOption(String message) {

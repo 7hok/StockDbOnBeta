@@ -14,7 +14,7 @@ public class Data {
         try {
             statement=GetConnection.connection.createStatement();
             //for read data
-            String sqlRead="select * from products where status = 1";
+            String sqlRead="select * from products where status = 1 order by id asc";
             arrayList=new ArrayList<>();
             ResultSet resultSet=statement.executeQuery(sqlRead);
             while (resultSet.next()){
@@ -41,11 +41,9 @@ public class Data {
 
             statement = GetConnection.connection.createStatement();
             DatabaseMetaData dbm = GetConnection.connection.getMetaData();
-            System.out.println("here");
             ResultSet tables = dbm.getTables(null, null, "tb_temp", null);
             String sqlCreateTable="CREATE TABLE tb_temp( id serial PRIMARY KEY, name VARCHAR (50) , unitprice float8, stockQty INT,importedDate VARCHAR (50),status INT);";
-            String sqlInsertData="INSERT INTO tb_temp (name, unitPrice, stockQty, importedDate,status) VALUES ("+'"'+pro_name+'"'+","+pro_price+","+qty+","+'"'+importDate+'"'+",1)";
-            System.out.println(sqlInsertData);
+            String sqlInsertData="INSERT INTO tb_temp (name, unitPrice, stockQty, importedDate,status) VALUES ('"+pro_name+"',"  +pro_price+ "," +qty+ ",'"+ importDate +"',1);";
             if (checkWhetherTempTableHasValue())
                 statement.executeUpdate(sqlInsertData);
             else {
@@ -115,7 +113,6 @@ public class Data {
             try {
              arrayList = Manipulator.statementQueryer("select * from tb_statements");
              if(arrayList.size()>0){
-                 System.out.println(arrayList);
              }
             }catch (SQLException sql){
 
@@ -137,10 +134,9 @@ public class Data {
 
             if (i>0){
 //                System.out.println("found");
-                System.out.println(i);
                 return i;
             }else{
-                System.out.println("not found");
+
                 return i;
             }
         }catch (SQLException sql){
@@ -167,4 +163,5 @@ public class Data {
         }
         return boo;
     }
+
 }

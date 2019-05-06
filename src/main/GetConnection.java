@@ -19,9 +19,12 @@ public class GetConnection {
     public static final String separator = "®";
     public static Connection connection = null;
     public static int lastIndexOfRecord;
+    public static int lastIndexOfDb;
     static {
-        lastIndexOfRecord = Manipulator.lastIdOfProduct()+1;
+        lastIndexOfRecord = Manipulator.lastIdOf("products")+1;
+        lastIndexOfDb =  Manipulator.lastIdOf("tb_backup_history")+1;
     }
+
     public static void  openConnection(){
         try {
 //            Class.forName("com.mysql.jdbc.Driver");
@@ -58,6 +61,7 @@ public class GetConnection {
             e.printStackTrace();
         }
     }
+
 
 
 
