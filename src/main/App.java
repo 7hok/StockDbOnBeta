@@ -37,13 +37,18 @@ public class App<publlic> {
         //generateData();
         saveNewOption("Do you want to save the last modified? [Y/y] or [N/n] : ");
         //getData();
+
         products = Data.read();
+
+
         do {
             String key = printMenu();
 //            key.toLowerCase();
             switch (key.toLowerCase()) {
                 case "*":
-                    gotoPage(currentPage);
+                    if(products.size() == 0){}
+                    else
+                        gotoPage(currentPage);
                     break;
                 case "w":
                     Product product = Manipulator.insertNewRecord();
@@ -95,7 +100,10 @@ public class App<publlic> {
                     }
                     break;
                 case "g":
-                    gotoPage(Validator.readInt("Input page number(1-" + getTotalPage() + ") : ", 1, getTotalPage()));
+                    if(products.size() <1) {
+
+                    }else
+                        gotoPage(Validator.readInt("Input page number(1-" + getTotalPage() + ") : ", 1, getTotalPage()));
                     break;
                 case "se":
                     setRow();
@@ -110,6 +118,8 @@ public class App<publlic> {
                     break;
                 case "re":
                     Bonus.restoreDatabase();
+                    products = new ArrayList<>();
+                    products = Data.read();
                     break;
                 case "h":
                     help();
@@ -177,7 +187,15 @@ public class App<publlic> {
                         String[] myString = subStringWrite(str);
                         if (myString[0] == "Wrong") return;
                         try {
-                            writeData(myString[1], Double.valueOf(myString[2]), Integer.valueOf(myString[3]));
+                            ArrayList<String> temporaryList = Data.write(myString[1], Double.valueOf(myString[2]), Integer.valueOf(myString[3]),App.getDate(),1);
+                            if(temporaryList.size()>0){
+                                products.add(temporaryList.get(0));
+                                System.out.println("success added");
+                            }else {
+                                System.out.println("it not work");
+                            }
+
+//                            writeData(myString[1], Double.valueOf(myString[2]), Integer.valueOf(myString[3]));
                         } catch (NumberFormatException e) {
                             System.err.println("Syntax: #w/ProductName/Price/Quantity\nExample #w/Reach/1.0/1");
                         }
@@ -427,6 +445,7 @@ public class App<publlic> {
             String[] myProducts = new String[start + numOfRows];
             for (int i = start; i < start + numOfRows; i++) {
                 addRowTable(products.get(i));
+                if(i > products.size()-1) break;
 //                myProducts[i-start] = products.get(i);
             }
 //            myTable(20,myProducts);

@@ -1,6 +1,8 @@
 package main;
 
 import helper.Validator;
+import model.Product;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
