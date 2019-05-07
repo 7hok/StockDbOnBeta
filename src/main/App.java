@@ -69,7 +69,11 @@ public class App<publlic> {
                     delete();
                     break;
                 case "f":
-                    goFirst();
+                    if(products.size()<1) {
+
+                    }else{
+                     goFirst();
+                    }
                     break;
                 case "p":
                     goPrevious();
@@ -443,6 +447,7 @@ public class App<publlic> {
         initTable();
         for (int i = 0; i < numOfRows; i++) {
             addRowTable(products.get(i));
+            if(i == products.size()-1) break; //Change
         }
         String[] myPageDetail = printPageSummary();
         table.addCell(myPageDetail[0], new CellStyle(CellStyle.HorizontalAlign.left), 2);
@@ -479,13 +484,14 @@ public class App<publlic> {
         initTable();
         currentPage = getTotalPage();
         int start = numOfRows * (currentPage - 1);
-        for (int i = start; i < products.size(); i++) {
-            addRowTable(products.get(i));
-        }
-        String[] myPageDetail = printPageSummary();
-        table.addCell(myPageDetail[0], new CellStyle(CellStyle.HorizontalAlign.left), 2);
-        table.addCell(myPageDetail[1], new CellStyle(CellStyle.HorizontalAlign.right), 3);
-        System.out.println(table.render());
+        if(products.size()==0) return;
+    for (int i = start; i < products.size(); i++) {
+        addRowTable(products.get(i));
+    }
+    String[] myPageDetail = printPageSummary();
+    table.addCell(myPageDetail[0], new CellStyle(CellStyle.HorizontalAlign.left), 2);
+    table.addCell(myPageDetail[1], new CellStyle(CellStyle.HorizontalAlign.right), 3);
+    System.out.println(table.render());
     }
 
     public static boolean containedUnsavedFiles() {

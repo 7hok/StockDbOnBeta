@@ -21,13 +21,13 @@ public class GetConnection {
     public static int lastIndexOfRecord;
     public static int lastIndexOfDb;
     static {
+        GetConnection.checkTable();
         lastIndexOfRecord = Manipulator.lastIdOf("products")+1;
         lastIndexOfDb =  Manipulator.lastIdOf("tb_backup_history")+1;
     }
 
     public static void  openConnection(){
         try {
-//            Class.forName("com.mysql.jdbc.Driver");
             Class.forName("org.postgresql.Driver");//<<<<update driver
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -37,12 +37,7 @@ public class GetConnection {
         String url = "jdbc:postgresql://localhost:5432/Stock Management";
         String username = "postgres";
         String password = "123123123";
-//        String url = "jdbc:mysql://localhost:3306/javatesting";
         try {
-
-            ///<<<< update package connection "user name password "
-            ///<<<< user and password
-            //connection = DriverManager.getConnection(url,"postgres", "123");
 
             connection = DriverManager.getConnection(url,username, password);
         } catch (SQLException e) {
@@ -62,8 +57,26 @@ public class GetConnection {
         }
     }
 
+    public static void checkTable() {
+        String sql1 = "CREATE TABLE IF NOT EXISTS products (id serial PRIMARY KEY, name VARCHAR(50), unitPrice float8, stockQty INT, importedDate VARCHAR(50), status INT)";
+        String sql2 = "CREATE TABLE IF NOT EXISTS tb_statements(id serial PRIMARY KEY, statement VARCHAR(255))";
+        String sql3 = "CREATE TABLE IF NOT EXISTS tb_backup_history(id serial PRIMARY KEY, db_name VARCHAR(50) NOT NULL, time timestamp default current_timestamp, status int)";
+        GetConnection.openConnection();
+        try{
+            Statement statement = GetConnection.connection.createStatement();
 
+            statement.execute(sql1);
+            statement.execute(sql2);
+            statement.execute(sql3);
+        }catch (SQLException e){
+            System.out.println("Error");
+            System.out.println(e.getMessage());
+        }
+        finally{
+            GetConnection.closeConnection();
+        }
 
+    }
 
 }//endofcloseConnection
 

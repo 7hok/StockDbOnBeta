@@ -19,7 +19,6 @@ import java.util.Scanner;
 
 public class Manipulator {
 
-
     public static void main(String[] args) throws SQLException{
 
 //        Data.executeDataFromStatementTable();
@@ -107,7 +106,7 @@ public class Manipulator {
     public static boolean saveSqlStatementToTbStatements(String sql){
         try {
             //<<<<< testing
-            System.out.println(updater(sql));
+            updater(sql);
         }catch (SQLException sqlError){
             sqlError.printStackTrace();
         }
@@ -116,7 +115,6 @@ public class Manipulator {
 
     //***** generate sql statement
     public static String generateUpdateStatement(String updateQuery){
-        System.out.println('"'+updateQuery+'"');
         try {
            int i = updater(  "insert into tb_statements (statement) values ('"+updateQuery+"')");
         }catch (SQLException sql ){
@@ -169,7 +167,6 @@ public class Manipulator {
                     String str = Manipulator.generateStatement(statement);
                     Manipulator.updater(str);
                 }catch (SQLException sql){
-                    System.out.println("problem with sql statement update");
                 }
             });
             Manipulator.updater("delete from tb_statements");

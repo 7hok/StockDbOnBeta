@@ -3,6 +3,7 @@ package helper;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Validator {
     private static Scanner scanner = new Scanner(System.in);
@@ -101,5 +102,20 @@ public class Validator {
     private static boolean isValidStringNumber(String substring) {
         String regex = "[0-9]+";
         return substring.matches(regex);
+    }
+
+    static Boolean stringHasChar(String regex, String text) {
+        return Pattern.matches(".*" + regex + ".*", text);
+    }// "\'"
+
+    public static String readStringWithCondition(String message, String regex){
+        String value = null;
+        boolean validValue = false;
+        while (!validValue){
+            System.out.print(message);
+            value = scanner.nextLine();
+            validValue = !stringHasChar(regex, value);
+        }
+        return value;
     }
 }

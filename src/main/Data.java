@@ -22,11 +22,6 @@ public class Data {
                         +GetConnection.separator+resultSet.getDouble(3)+GetConnection.separator+resultSet.getInt(4)
                         +GetConnection.separator+resultSet.getString(5));
             }
-//            Iterator<String> iter
-//                    = arrayList.iterator();
-//            while (iter.hasNext()) {
-//                System.out.println(iter.next());
-//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -96,16 +91,6 @@ public class Data {
     public static void main(String[] args) {
         savAndRecovery();
     }
-    /*
-    * if(Data.checkWhetherStatementTableHasValue()>0){
-    *   not work
-    * }else{
-    *     executeDataFromStatementTable();
-    * }
-    *
-    *
-    * */
-
 
     //direct execute so all conditional is checked
     public static void executeDataFromStatementTable(){
