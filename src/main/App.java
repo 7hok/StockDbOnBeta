@@ -36,6 +36,8 @@ public class App<publlic> {
         myGroupname();
         //generateData();
         saveNewOption("Do you want to save the last modified? [Y/y] or [N/n] : ");
+        lastIndexOfRecord = Manipulator.lastIdOf("products")+1;
+
         //getData();
 
         products = Data.read();
