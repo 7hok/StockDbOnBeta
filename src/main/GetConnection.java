@@ -22,7 +22,6 @@ public class GetConnection {
     public static int lastIndexOfDb;
     static {
         GetConnection.checkTable();
-        lastIndexOfRecord = Manipulator.lastIdOf("products")+1;
         lastIndexOfDb =  Manipulator.lastIdOf("tb_backup_history")+1;
     }
 
